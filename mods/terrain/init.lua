@@ -6,6 +6,21 @@ minetest.register_node('terrain:stone', {
   is_ground_content = true
 })
 
+minetest.register_node('terrain:dirt', {
+  description = "mapgen_dirt",
+	tiles = {"dirt.png"},
+  groups = { oddly_breakable_by_hand = 1, cracky = 1 },
+  is_ground_content = true
+})
+
+minetest.register_node('terrain:hue', {
+  description = "mapgen_hue",
+	tiles = {"hue.png"},
+  groups = { oddly_breakable_by_hand = 1, cracky = 1 },
+  is_ground_content = true
+})
+
+
 minetest.register_node("terrain:water_source", {
 	drawtype = "liquid",
 	waving = 3,
@@ -129,10 +144,6 @@ minetest.register_node("terrain:river_water_source", {
 	liquid_alternative_flowing = "terrain:river_water_flowing",
 	liquid_alternative_source = "terrain:river_water_source",
 	liquid_viscosity = 1,
-	-- Not renewable to avoid horizontal spread of water sources in sloping
-	-- rivers that can cause water to overflow riverbanks and cause floods.
-	-- River water source is instead made renewable by the 'force renew'
-	-- option used in the 'bucket' mod by the river water bucket.
 	liquid_renewable = false,
 	liquid_range = 2,
 	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
@@ -189,3 +200,36 @@ minetest.register_alias('mapgen_stone', 'terrain:stone')
 minetest.register_alias('mapgen_water_source', 'terrain:water_source')
 minetest.register_alias('mapgen_river_water_source', 'terrain:river_water_source')
 
+minetest.register_biome({
+	name = "plains",
+	node_filler = "terrain:dirt",
+	depth_filler = 5,
+	y_min = 0,
+	y_max = 100
+})
+
+minetest.register_biome({
+	name = "underplains",
+	node_filler = "terrain:hue",
+	node_stone = "air",
+	node_top = "terrain:hue",
+	node_water = "air",
+	node_river_water = "air",
+	node_cave_liquid = "air",
+	y_min = -100,
+	y_max = -100 + 90,
+	heat_point = 100,
+	humidity_point = 0,
+})
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = {"terrain:hue", "terrain:stone", "terrain:dirt"},
+	sidelen = 4,
+	fill_ratio = 0.3,
+	biomes = {"plains"},
+	y_min = 0,
+	y_max = 0 + 100,
+	decoration = "terrain:hue",
+	param2 = 0,
+})

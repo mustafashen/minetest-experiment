@@ -30,3 +30,10 @@ minetest.register_craft({
 		{"terrain:stone"}
 	}
 })
+
+minetest.register_craft({
+	output = "tools:pick_wood",
+	recipe = {
+		{"terrain:dirt"}
+	}
+})
